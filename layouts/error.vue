@@ -1,40 +1,36 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
+  <v-app>
+    <h1 v-if="errorMessage">
+      {{ errorMessage }}
     </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
+
     <NuxtLink to="/">
-      Home page
+      Index Page
     </NuxtLink>
   </v-app>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api';
+
+export default defineComponent({
   layout: 'empty',
+
   props: {
     error: {
       type: Object,
       default: null
     }
   },
-  data () {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
-    }
+
+  setup({ error }) {
+    const errorMessage = computed(() => {
+      return error.statusCode === 404 ? '404 Not found' : 'An error occurred';
+    });
+
+    return { errorMessage }
   },
-  head () {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  }
-}
+});
 </script>
 
 <style scoped>

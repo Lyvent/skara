@@ -1,89 +1,137 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container
+    id="landing"
+    class="text-center content"
+  >
+    <h1 class="text-h1 mb-2 font-weight-bold"
+    >Lyvent.</h1>
+
+    <p class="text-h6">
+      Join a growing community of people
+      <br />
+      living and sharing the moment. 🌈🌿
+    </p>
+
+    <v-text-field
+      rounded
+      outlined
+      class="search"
+      append-icon="mdi-magnify"
+      placeholder="Search stories"
+      hint="Still figuring what to write here..."
+    ></v-text-field>
+
+    <v-row align="center" justify="center">
+      <v-col
+        md="3"
+        cols="12"
+        v-for="option in options"
+        :key="option.title"
+      >
+
+        <v-card
+          @click="viewPage()"
+          class="rounded-lg text-left option"
+          elevation="5"
+        >
+          <img :src="getSVG(option.svgName)" class="option-img"/>
+          <v-divider />
+
+          <v-card-title>
+            {{ option.title }}
+            <v-spacer />
+            <v-icon v-text="option.icon" />
+          </v-card-title>
+
+          <v-card-text>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, nisi.
+          </v-card-text>
+        </v-card>
+
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
-<script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api';
 
-export default {
-  components: {
-    Logo,
-    VuetifyLogo
+// Interfaces
+interface Option {
+  title: string;
+  svgName: string;
+  icon: string;
+  description: string;
+}
+
+// Functions
+const getSVG = (svgName: string) => {
+  return require(`~/assets/Index/${ svgName }`);
+};
+
+const viewPage = () => {
+  console.log('Implement');
+};
+
+export default defineComponent({
+  name: 'index',
+  layout: 'empty',
+
+  setup() {
+    const options: Array<Option> = [
+      {
+        title: 'Join',
+        svgName: 'Join.svg',
+        icon: 'mdi-account-multiple-plus',
+        description: 'Lorem 10'
+      },
+      {
+        title: 'Explore',
+        svgName: 'Explore.svg',
+        icon: 'mdi-compass',
+        description: 'Lorem 10'
+      },
+      {
+        title: 'About',
+        svgName: 'About.svg',
+        icon: 'mdi-account',
+        description: 'Lorem 10'
+      }
+    ];
+
+    return {
+      options,
+
+      // Functions
+      getSVG,
+      viewPage,
+    }
+  },
+
+  head() {
+    return {
+      title: 'Welcome to Lyvent ✨'
+    }
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+#landing {
+  height: 80vh;
+  margin-top: 2em;
+
+  .search {
+    max-width: 23em;
+    margin: 0 auto;
+  }
+
+  .option {
+    &-img {
+      width: 100%;
+      padding: 2em;
+      height: 13em;
+    }
   }
 }
-</script>
+</style>
