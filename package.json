@@ -19,7 +19,7 @@
     "@nuxtjs/pwa": "^3.2.2",
     "@vue/composition-api": "^1.0.0-beta.17",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.7",
+    "nuxt": "^2.14.8",
     "nuxt-webfontloader": "^1.1.0"
   },
   "devDependencies": {
